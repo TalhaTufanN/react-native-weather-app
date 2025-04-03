@@ -14,6 +14,7 @@ import { CalendarDaysIcon, MapPinIcon } from "react-native-heroicons/solid";
 import { debounce } from "lodash";
 import { fetchLocations, fetchWeatherForecast } from "../api/weather";
 import { weatherImages } from "../constants/constants";
+import { weatherTranslationsTr } from "../languages/tr_TR";
 import * as Progress from "react-native-progress";
 import { storeData, getData } from "../utils/asyncStorage";
 
@@ -144,7 +145,6 @@ export default function HomeScreen() {
             <View className="flex-row justify-center">
               <Image
                 source={weatherImages[current?.condition?.text]}
-                // source={require("../assets/weather/sunny.png")}
                 className="w-52 h-52"
               />
             </View>
@@ -154,7 +154,7 @@ export default function HomeScreen() {
                 {current?.temp_c}&#176;
               </Text>
               <Text className="text-center text-white text-xl tracking-widest">
-                {current?.condition?.text}
+                {weatherTranslationsTr[current?.condition?.text] || current?.condition?.text}
               </Text>
             </View>
             {/* Detaylı bilgiler */}
@@ -196,7 +196,7 @@ export default function HomeScreen() {
               <View className="flex-row items-center mx-5 space-x-2">
                 <CalendarDaysIcon size="24" color="white" />
                 <Text className="text-white text-base">
-                  Haftalık hava durumu
+                  Haftalık
                 </Text>
               </View>
               <ScrollView
@@ -222,9 +222,6 @@ export default function HomeScreen() {
                       <Text className="text-white">{dayName}</Text>
                       <Text className="text-white text-xl font-semibold">
                         {item?.day?.avgtemp_c}&#176;
-                      </Text>
-                      <Text className="text-white text-xs font-semibold">
-                        {item?.day?.condition?.text};
                       </Text>
                     </View>
                   );
