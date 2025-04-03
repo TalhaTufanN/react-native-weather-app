@@ -19,7 +19,7 @@ import * as Progress from "react-native-progress";
 import { storeData, getData } from "../utils/asyncStorage";
 
 export default function HomeScreen() {
-  const [showSearch, toggleSearch] = useState(false);
+  // const [showSearch, toggleSearch] = useState(false);
   const [locations, setLocations] = useState([]);
   const [weather, setWeather] = useState({});
   const [loading, setLoading] = useState(true);
@@ -27,7 +27,7 @@ export default function HomeScreen() {
   const handleLocation = (loc) => {
     // console.log("Konum:", loc);
     setLocations([]);
-    toggleSearch(false);
+    // toggleSearch(false);
     setLoading(true);
     fetchWeatherForecast({
       cityName: loc.name,
@@ -68,7 +68,8 @@ export default function HomeScreen() {
     });
   };
 
-  const handleTextDebounce = useCallback(debounce(handleSearch, 1200), []);
+  const handleTextDebounce = useCallback(debounce(handleSearch, 20), []);
+  const handleTextDebounceWithoutLatency = useCallback(debounce(handleSearch, 0), []);
   const { current, location } = weather;
 
   return (
@@ -81,28 +82,35 @@ export default function HomeScreen() {
         </View>
       ) : (
         <SafeAreaView className="flex flex-1">
+          <View className="h-10 w-full flex-row items-center mt-8 justify-center">
+            <Text className="text-white text-xl font-bold text-center">
+              <Text className="text-blue-400">HAVA</Text>
+              DURUMU
+              </Text>
+          </View>
+
           {/* Search section */}
           <View
             style={{ height: "8%" }}
-            className="mx-4 p-1 my-8 relative z-50"
+            className="mx-4 p-1 relative z-50"
           >
             <View
               className="flex-row justify-end items-center p-1 rounded-full"
               style={{
-                backgroundColor: showSearch ? "#343434" : "transparent",
+                backgroundColor:"#121212",
               }}
             >
-              {showSearch ? (
+              {/* {showSearch ? ( */}
                 <TextInput
                   onChangeText={handleTextDebounce}
                   placeholder="Şehir ara"
                   placeholderTextColor={"lightgray"}
                   className="pl-6 h-10 flex-1 text-base text-white"
                 />
-              ) : null}
+              {/* // ) : null} */}
 
               <TouchableOpacity
-                onPress={() => toggleSearch(!showSearch)}
+                onPress={handleTextDebounceWithoutLatency}
                 style={{ backgroundColor: "#242424" }}
                 className="rounded-full p-2 m-1"
               >
@@ -110,7 +118,7 @@ export default function HomeScreen() {
               </TouchableOpacity>
             </View>
 
-            {locations.length > 0 && showSearch ? (
+            {locations.length > 0 ?(
               <View className="absolute w-full bg-neutral-700 top-16 rounded-3xl">
                 {locations.map((loc, index) => {
                   let showB = index + 1 != locations.length;
