@@ -15,13 +15,13 @@ import { debounce } from "lodash";
 import { fetchLocations, fetchWeatherForecast } from "../api/weather";
 import { weatherImages } from "../constants/constants";
 import * as Progress from "react-native-progress";
-import { storeData } from "../utils/asyncStorage";
+import { storeData, getData } from "../utils/asyncStorage";
 
 export default function HomeScreen() {
   const [showSearch, toggleSearch] = useState(false);
   const [locations, setLocations] = useState([]);
   const [weather, setWeather] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handleLocation = (loc) => {
     // console.log("Konum:", loc);
@@ -57,7 +57,7 @@ export default function HomeScreen() {
     let myCity = await getData("city");
     let cityName = "Ankara";
     if (myCity) cityName = myCity;
-    
+
     fetchWeatherForecast({
       cityName,
       days: "7",
@@ -186,9 +186,7 @@ export default function HomeScreen() {
                   style={{ tintColor: "white" }}
                 />
                 <Text className="text-white font-semibold text-base">
-                  {
-                    weather?.forecast?.forecastday[0]?.astro?.sunrise
-                  }
+                  {weather?.forecast?.forecastday[0]?.astro?.sunrise}
                 </Text>
               </View>
             </View>
