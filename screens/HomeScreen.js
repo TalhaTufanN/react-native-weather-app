@@ -46,7 +46,6 @@ export default function HomeScreen() {
       fetchLocations({ cityName: value }).then((data) => {
         setLocations(data);
 
-        // console.log("got locations: ",data);
       });
     }
   };
@@ -69,7 +68,10 @@ export default function HomeScreen() {
   };
 
   const handleTextDebounce = useCallback(debounce(handleSearch, 20), []);
-  const handleTextDebounceWithoutLatency = useCallback(debounce(handleSearch, 0), []);
+  const handleTextDebounceWithoutLatency = useCallback(
+    debounce(handleSearch, 0),
+    []
+  );
   const { current, location } = weather;
 
   return (
@@ -86,27 +88,24 @@ export default function HomeScreen() {
             <Text className="text-white text-xl font-bold text-center">
               <Text className="text-blue-400">HAVA</Text>
               DURUMU
-              </Text>
+            </Text>
           </View>
 
           {/* Search section */}
-          <View
-            style={{ height: "8%" }}
-            className="mx-4 p-1 relative z-50"
-          >
+          <View style={{ height: "8%" }} className="mx-4 p-1 relative z-50">
             <View
               className="flex-row justify-end items-center p-1 rounded-full"
               style={{
-                backgroundColor:"#121212",
+                backgroundColor: "#121212",
               }}
             >
               {/* {showSearch ? ( */}
-                <TextInput
-                  onChangeText={handleTextDebounce}
-                  placeholder="Şehir ara"
-                  placeholderTextColor={"lightgray"}
-                  className="pl-6 h-10 flex-1 text-base text-white"
-                />
+              <TextInput
+                onChangeText={handleTextDebounce}
+                placeholder="Şehir ara"
+                placeholderTextColor={"lightgray"}
+                className="pl-6 h-10 flex-1 text-base text-white"
+              />
               {/* // ) : null} */}
 
               <TouchableOpacity
@@ -118,7 +117,7 @@ export default function HomeScreen() {
               </TouchableOpacity>
             </View>
 
-            {locations.length > 0 ?(
+            {locations.length > 0 ? (
               <View className="absolute w-full bg-neutral-700 top-16 rounded-3xl">
                 {locations.map((loc, index) => {
                   let showB = index + 1 != locations.length;
@@ -162,7 +161,8 @@ export default function HomeScreen() {
                 {current?.temp_c}&#176;
               </Text>
               <Text className="text-center text-white text-xl tracking-widest">
-                {weatherTranslationsTr[current?.condition?.text] || current?.condition?.text}
+                {weatherTranslationsTr[current?.condition?.text] ||
+                  current?.condition?.text}
               </Text>
             </View>
             {/* Detaylı bilgiler */}
@@ -203,9 +203,7 @@ export default function HomeScreen() {
             <View className="mb-2 space-y-3">
               <View className="flex-row items-center mx-5 space-x-2">
                 <CalendarDaysIcon size="24" color="white" />
-                <Text className="text-white text-base">
-                  Haftalık
-                </Text>
+                <Text className="text-white text-base">Haftalık</Text>
               </View>
               <ScrollView
                 horizontal
