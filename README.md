@@ -1,3 +1,1 @@
-## 🎬 Uygulama Tanıtımı
-
-<video src="../assets/demo.mp4" width="300" controls></video>
+📽️ [Tanıtım videosunu izlemek için tıklayın](./assets/demo.mp4)
